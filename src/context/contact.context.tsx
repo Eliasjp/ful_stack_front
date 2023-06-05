@@ -19,6 +19,7 @@ interface ContactContextSchema {
     setContacts: (data: Array<ContactData>) => void,
     createContact: (data: ContactOmmitedData) => void
     updateContact: (data: ContactData) => void
+    deleteContact: (id: string) => void
 }
 
 export function ContactProvider({children}: Props) {
@@ -77,8 +78,28 @@ export function ContactProvider({children}: Props) {
         })
     }
 
+    async function deleteContact (id: string){
+        const getToken: string | null = window.localStorage.getItem("@token")
+
+        await api.delete(`/contact/${id}`, {
+            headers: {
+                "Authorization": `Bearer ${getToken}`
+            }
+        })
+        .then(() => {
+            const arr = [...allContacts]
+            const find = arr.findIndex((element) => element.id == id)
+            arr.splice(find, 1)
+            setModalContent(false)
+            setContacts(arr)
+        })
+        .catch(() => {
+            alert("Um erro ocorreu na deleção do contato")
+        })
+    }
+
     return (
-        <ContactContext.Provider value={{allContacts, setContacts, listContacts, createContact, updateContact}}>
+        <ContactContext.Provider value={{allContacts, setContacts, listContacts, createContact, updateContact, deleteContact}}>
             {children}
         </ContactContext.Provider>
     )
