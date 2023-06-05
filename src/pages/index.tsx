@@ -31,11 +31,11 @@ export default function Home() {
   }, [])
 
   return (
-    <div className='flex flex-col min-h-screen gap-12 pl-4'>
+    <div className='flex flex-col min-h-screen gap-12 px-4'>
       <section className='flex flex-col gap-3'>
         <h2>User information</h2>
         <UserInfo full_name={user.full_name} email={user.email} phone={user.phone}></UserInfo>
-        <button onClick={() => setModalContent(<ClientUpdateForm></ClientUpdateForm>)}>Edit profile</button>
+        <button onClick={() => setModalContent(<ClientUpdateForm></ClientUpdateForm>)} className='border border-green-400 bg-green-300 rounded'>Edit profile</button>
       </section>
       <section className='flex flex-col gap-3'>
         <h2>Contacts</h2>
