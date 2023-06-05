@@ -16,7 +16,8 @@ interface ClientContextSchema {
     retrieveClientInformation: () => void
     user: ClientReturnData
     setUser: (data: ClientReturnData) => void
-    updateClient: (data: ClientReturnData) => void
+    updateClient: (data: ClientReturnData) => void,
+    deleteClient: () => void
 }
 
 export function ClientProvider({children}: Props) {
@@ -40,8 +41,6 @@ export function ClientProvider({children}: Props) {
     async function updateClient (data: ClientReturnData){
         const getToken: string | null = window.localStorage.getItem("@token")
         const decoded: any = jwtDecode(getToken!)
-        console.log(decoded.sub)
-        console.log(getToken)
         await api.patch(`/client/${decoded.sub}`, data, {
             headers: {
                 "Authorization": "Bearer " + getToken,
@@ -53,13 +52,29 @@ export function ClientProvider({children}: Props) {
         })
         .catch((response) => {
             alert("Ocorreu uma falha na edição")
-            // window.localStorage.removeItem("@token")
-            // router.push("/login")
+        })
+    }
+
+    async function deleteClient (){
+        const getToken: string | null = window.localStorage.getItem("@token")
+        const decoded: any = jwtDecode(getToken!)
+        await api.delete(`/client/${decoded.sub}`, {
+            headers: {
+                "Authorization": "Bearer " + getToken,
+            }
+        })
+        .then(() => {
+            window.localStorage.removeItem("@token")
+            setModalContent(false)
+            router.push("login")
+        })
+        .catch((response) => {
+            alert("Ocorreu uma falha na deleção")
         })
     }
 
     return (
-        <ClientContext.Provider value={{user, setUser, retrieveClientInformation, updateClient}}>
+        <ClientContext.Provider value={{user, setUser, retrieveClientInformation, updateClient, deleteClient}}>
             {children}
         </ClientContext.Provider>
     )
