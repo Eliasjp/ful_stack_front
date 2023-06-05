@@ -9,7 +9,7 @@ export const contactSchema = z.object({
 
 export type ContactData = z.infer<typeof contactSchema>
 
-const contactIdOmitted = contactSchema.omit({
+export const contactIdOmitted = contactSchema.omit({
     id: true
 })
 
