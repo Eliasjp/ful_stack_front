@@ -8,7 +8,13 @@ export const clientSchema = z.object({
     password: z.string()
 })
 
+export const clientReturnSchema = clientSchema.omit({
+    id: true,
+    password: true
+})
+
 export type ClientData = z.infer<typeof clientSchema>
+export type ClientReturnData = z.infer<typeof clientReturnSchema>
 
 export const registerSchema = clientSchema.omit({
     id: true
