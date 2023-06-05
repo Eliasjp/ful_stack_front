@@ -6,15 +6,18 @@ import { clientContext } from '@/context/client.context'
 import { UserInfo } from '@/components/userInformation.component'
 import { contactContext } from '@/context/contact.context'
 import { RenderContacts } from '@/components/renderContacts.component'
+import { modalContext } from '@/context/modal.context'
+import { ClientUpdateForm } from '@/components/clientUpdate.component'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { token, setToken } = accCtx()
   const { allContacts, listContacts } = contactContext() 
+  const { user, retrieveClientInformation } = clientContext()
+  const { modalContent, setModalContent } = modalContext()
 
   const router = useRouter()
-  const { user, retrieveClientInformation } = clientContext()
 
   useEffect(() => {
     const checkToken = window.localStorage.getItem("@token")
@@ -32,6 +35,7 @@ export default function Home() {
       <section className='flex flex-col gap-3'>
         <h2>User information</h2>
         <UserInfo full_name={user.full_name} email={user.email} phone={user.phone}></UserInfo>
+        <button onClick={() => setModalContent(<ClientUpdateForm></ClientUpdateForm>)}>Edit profile</button>
       </section>
       <section className='flex flex-col gap-3'>
         <h2>Contacts</h2>
