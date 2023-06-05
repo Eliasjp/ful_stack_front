@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { accCtx } from "@/context/account.context";
 import { RegisterData, registerSchema } from "@/schema/client.schema";
+import Link from "next/link";
 
 export function RegisterForm (){
     const { register, handleSubmit } = useForm<RegisterData>({
@@ -37,6 +38,7 @@ export function RegisterForm (){
                 <input type="password" placeholder="Digite sua senha" {...register("password")} className="h-12 py-2 px-1 border-gray-500 border rounded-md"/>
             </div>
             <button type="submit" className="h-12 py-2 px-1 border-blue-500 bg-blue-200 border rounded-md">Entrar</button>
+            <Link href="/login" className="h-12 py-2 px-1 border-green-500 bg-green-200 border rounded-md w-full text-center">Ir para o Login</Link>
         </form>
     )
 }
