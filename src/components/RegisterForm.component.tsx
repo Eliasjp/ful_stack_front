@@ -6,12 +6,11 @@ import { RegisterData, registerSchema } from "@/schema/client.schema";
 export function RegisterForm (){
     const { register, handleSubmit } = useForm<RegisterData>({
         resolver: zodResolver(registerSchema)
-      });
+    });
 
     const { registerAction, failedStatusR } = accCtx()
 
     async function submitRegister (data: any){
-        console.log(data)
         registerAction(data)
     }
 

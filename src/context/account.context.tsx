@@ -12,6 +12,7 @@ interface Props {
 interface AccountSchema {
     login: (data: LoginData) => void
     registerAction: (data: RegisterData) => void
+    setToken: (token: string) => void
     token: string
     failedStatusL: boolean,
     failedStatusR: string
@@ -26,6 +27,7 @@ export function AccountProvider({children}: Props) {
     async function login (data: LoginData){
         await api.post("/auth", data)
         .then((response) => {
+            window.localStorage.setItem("@token", response.data.token)
             setToken(response.data.token)
             setFailedL(false)
             router.push("/")
@@ -48,7 +50,7 @@ export function AccountProvider({children}: Props) {
     }
 
     return (
-        <AccountContext.Provider value={{token, failedStatusL, failedStatusR, login, registerAction}}>
+        <AccountContext.Provider value={{token, failedStatusL, failedStatusR, login, registerAction, setToken}}>
             {children}
         </AccountContext.Provider>
     )
