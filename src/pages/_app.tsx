@@ -8,16 +8,16 @@ import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-          <ModalProvider>
-    <AccountProvider>
-      <ClientProvider>
-        <ContactProvider>
-            <Component {...pageProps} />
-            <Modal />
-        </ContactProvider>
-      </ClientProvider>
-    </AccountProvider>
-          </ModalProvider>
+    <ModalProvider>
+      <AccountProvider>
+        <ClientProvider>
+          <ContactProvider>
+              <Component {...pageProps} />
+              <Modal />
+          </ContactProvider>
+        </ClientProvider>
+      </AccountProvider>
+    </ModalProvider>
 
   )
 }
