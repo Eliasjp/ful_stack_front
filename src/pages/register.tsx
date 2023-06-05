@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Register() {
   return (
-    <h1>Dashboard</h1>
+    <h1>Register</h1>
   )
 }
