@@ -9,6 +9,7 @@ import { RenderContacts } from '@/components/renderContacts.component'
 import { modalContext } from '@/context/modal.context'
 import { ClientUpdateForm } from '@/components/clientUpdate.component'
 import { DeleteClientTemplate } from '@/components/clientDelete.component'
+import { CreateContactTemplate } from '@/components/contactCreate.component'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -47,6 +48,7 @@ export default function Home() {
       </section>
       <section className='flex flex-col gap-3'>
         <h2>Contacts</h2>
+        <button onClick={() => setModalContent(<CreateContactTemplate></CreateContactTemplate>)}>Adicionar contatos</button>
         <RenderContacts list={allContacts}></RenderContacts>
       </section>
     </div>
