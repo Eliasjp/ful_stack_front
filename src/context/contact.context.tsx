@@ -18,6 +18,7 @@ interface ContactContextSchema {
     allContacts: Array<ContactData>
     setContacts: (data: Array<ContactData>) => void,
     createContact: (data: ContactOmmitedData) => void
+    updateContact: (data: ContactData) => void
 }
 
 export function ContactProvider({children}: Props) {
@@ -55,11 +56,32 @@ export function ContactProvider({children}: Props) {
         })
     }
 
+    async function updateContact (data: ContactData){
+        const getToken: string | null = window.localStorage.getItem("@token")
+        const { id, ...rest } = data
+
+        await api.patch(`/contact/${id}`, rest, {
+            headers: {
+                "Authorization": `Bearer ${getToken}`
+            }
+        })
+        .then((response) => {
+            const arr = [...allContacts]
+            const find = arr.findIndex((element) => element.id == id)
+            arr[find] = {...data}
+            setModalContent(false)
+            setContacts(arr)
+        })
+        .catch(() => {
+            alert("Um erro ocorreu na edição do contato")   
+        })
+    }
+
     return (
-        <ContactContext.Provider value={{allContacts, setContacts, listContacts, createContact}}>
+        <ContactContext.Provider value={{allContacts, setContacts, listContacts, createContact, updateContact}}>
             {children}
         </ContactContext.Provider>
     )
 }
 
-export const contactContext = () => useContext(ContactContext);
+export const contactContext = () => useContext(ContactContext)
