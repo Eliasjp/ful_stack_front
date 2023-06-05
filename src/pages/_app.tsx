@@ -1,4 +1,4 @@
-import { AccountProvider } from '@/context/login.context'
+import { AccountProvider } from '@/context/account.context'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 

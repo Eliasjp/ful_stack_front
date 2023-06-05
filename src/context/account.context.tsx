@@ -1,4 +1,4 @@
-import { LoginData } from "@/schema/client.schema";
+import { LoginData, RegisterData } from "@/schema/client.schema";
 import api from "@/service/api.service";
 import { useRouter } from "next/router";
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -11,29 +11,44 @@ interface Props {
 
 interface AccountSchema {
     login: (data: LoginData) => void
+    registerAction: (data: RegisterData) => void
     token: string
-    failedLogin: boolean
+    failedStatusL: boolean,
+    failedStatusR: string
 }
 
 export function AccountProvider({children}: Props) {
     const [token, setToken] = useState("")
-    const [failedLogin, setFailed] = useState(false)
+    const [failedStatusL, setFailedL] = useState(false)
+    const [failedStatusR, setFailedR] = useState("")
     const router = useRouter()
 
     async function login (data: LoginData){
         await api.post("/auth", data)
         .then((response) => {
             setToken(response.data.token)
-            setFailed(false)
-            router.push("/dashboard")
+            setFailedL(false)
+            router.push("/")
         })
         .catch(() => {
-            setFailed(true)
+            setFailedL(true)
+        })
+    }
+
+    async function registerAction (data: RegisterData){
+        await api.post("/client", data)
+        .then((response) => {
+            setFailedR("")
+            router.push("/login")
+        })
+        .catch((response) => {
+            setFailedR(response.response.data.message)
+            
         })
     }
 
     return (
-        <AccountContext.Provider value={{token, failedLogin, login}}>
+        <AccountContext.Provider value={{token, failedStatusL, failedStatusR, login, registerAction}}>
             {children}
         </AccountContext.Provider>
     )

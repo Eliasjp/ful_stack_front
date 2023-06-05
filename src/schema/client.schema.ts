@@ -10,6 +10,11 @@ export const clientSchema = z.object({
 
 export type ClientData = z.infer<typeof clientSchema>
 
+export const registerSchema = clientSchema.omit({
+    id: true
+})
+
+
 export const loginSchema = clientSchema.omit({
     id: true,
     full_name: true,
@@ -17,3 +22,5 @@ export const loginSchema = clientSchema.omit({
 })
 
 export type LoginData = z.infer<typeof loginSchema>
+
+export type RegisterData = z.infer<typeof registerSchema>
