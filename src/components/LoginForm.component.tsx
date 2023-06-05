@@ -5,6 +5,7 @@ import { LoginData, loginSchema } from "../schema/client.schema";
 import api from "../service/api.service";
 import { useContext, useEffect } from "react";
 import { accCtx } from "@/context/account.context";
+import Link from "next/link";
 
 export function LoginForm (){
     const { register, handleSubmit } = useForm<LoginData>({
@@ -29,6 +30,7 @@ export function LoginForm (){
                 <input type="password" placeholder="Digite sua senha" {...register("password")} className="h-12 py-2 px-1 border-gray-500 border rounded-md"/>
             </div>
             <button type="submit" className="h-12 py-2 px-1 border-blue-500 bg-blue-200 border rounded-md">Entrar</button>
+            <Link href="/register" className="h-12 py-2 px-1 border-green-500 bg-green-200 border rounded-md w-full text-center">Criar uma nova conta</Link>
         </form>
     )
 }
