@@ -1,6 +1,7 @@
 import { modalContext } from "@/context/modal.context";
 import { ContactData } from "@/schema/contact.schema";
 import { UpdateContactTemplate } from "./contactUpdate.component";
+import { DeleteContactTemplate } from "./contactDelete.component";
 
 interface RenderContactSchema {
     list: Array<ContactData>
@@ -21,6 +22,7 @@ export function RenderContacts ({ list }: RenderContactSchema){
                          full_name={element.full_name} 
                          email={element.email} phone={element.phone}
                          ></UpdateContactTemplate>)}>Editar Contato</button>
+                        <button onClick={() => setModalContent(<DeleteContactTemplate id={element.id}></DeleteContactTemplate>)}>Deletar contato</button>
                     </li>
                 )
             })
